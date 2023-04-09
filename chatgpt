@@ -1,0 +1,88 @@
+#!/bin/bash
+
+QUESTION=""
+API_KEY=""
+API_KEY_FILE="chatgpt_api_key.txt"
+API_KEY_DIR="$HOME/.local"
+API_KEY_FILE_FULL_PATH=$API_KEY_DIR/$API_KEY_FILE
+API_ENDPOINT="https://api.openai.com/v1/chat/completions"
+API_MODEL="gpt-3.5-turbo"
+API_TEMPERATURE="0.7"
+
+function show_help()
+{
+  echo "Usage: $0 [-a|--api API_KEY] <QUESTION>"
+  echo "  -a, --api API_KEY  The API key for the application"
+  echo "  -h, --help         Show this help message"
+}
+
+function parse_arguments_and_execute()
+{
+  while [[ $# -gt 0 ]]; do
+    key="$1"
+
+    case $key in
+        -a|--api)
+            API_KEY="$2";
+            create_api_key_file; exit 0
+            ;;
+        -h|--help)
+            show_help; exit 0
+            ;;
+        *)
+            QUESTION="$@"
+            read_api_key_file
+            send_command_to_api_and_print_result; exit 0
+            ;;
+    esac
+  done
+
+  show_help; exit 0
+}
+
+function read_api_key_file()
+{
+    if [ -e "$API_KEY_FILE_FULL_PATH" ]; then
+        API_KEY=$(cat $API_KEY_FILE_FULL_PATH)
+    else
+        echo "Need to configure API first!"
+        show_help
+        exit 0
+    fi
+}
+
+function create_api_key_file()
+{
+    if [ ! -d $API_KEY_DIR ]; then
+        mkdir -p $API_KEY_DIR
+    fi
+
+    echo $API_KEY > $API_KEY_FILE_FULL_PATH
+    echo "API KEY configured!"
+}
+
+function send_command_to_api_and_print_result()
+{
+    result=$(curl "$API_ENDPOINT" \
+                -H "Content-Type: application/json" \
+                -H "Authorization: Bearer $API_KEY" \
+                -d '{"model":"'$API_MODEL'", "messages":[{"role": "user", "content": "'"$QUESTION"'"}], "temperature": '$API_TEMPERATURE'}' \
+            2> /dev/null)
+
+    parsed_result=$(parse_result $result)
+    print_result $parsed_result
+}
+
+function print_result()
+{
+    result=$@
+    echo -e $result
+}
+
+function parse_result()
+{
+    full_result=$@
+    echo $full_result | grep -oP '(?<="content":")[^"]*(?=")'
+}
+
+parse_arguments_and_execute "$@"
