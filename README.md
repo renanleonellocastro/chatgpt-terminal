@@ -11,44 +11,44 @@ ChatGPT Terminal is a command-line tool that uses the OpenAI API to generate tex
 
 To install ChatGPT Terminal, first clone the repository:
 
-```bash
-git clone git@github.com:renanleonellocastro/chatgpt-terminal.git
-```
+<pre>
+<b>git clone git@github.com:renanleonellocastro/chatgpt-terminal.git</b>
+</pre>
 
 
 ### 📝 Script installation
 
 To install the ChatGPT command-line tool, navigate to the repository directory and run the installation script:
 
-```bash
-chmod +x install.sh
-./install.sh
-```
+<pre>
+<b>chmod +x install.sh</b>
+<b>./install.sh</b>
+</pre>
 
 
 ### 🛠️ Manual installation
 
 If you prefer, you can manually install the ChatGPT Terminal command-line tool by copying the **`chatgpt`** script to a directory in your system's **`PATH`**, such as **`/usr/local/bin`**. You'll also need to make the script executable:
 
-```bash
-sudo cp chatgpt /usr/local/bin
-sudo chmod +x /usr/local/bin/chatgpt
-```
+<pre>
+<b>sudo cp chatgpt /usr/local/bin</b>
+<b>sudo chmod +x /usr/local/bin/chatgpt</b>
+</pre>
 
 
 ## 🤔 Usage
 
 If it is your first time using ChatGPT Terminal then you have to set up your OpenAI API key using the `-a` or `--api` flag. If you don't provide an API key, ChatGPT Terminal will look for a stored API key in a file called `chatgpt_api_key.txt` in the directory `$HOME/.local`.
 
-```bash
-chatgpt --api YOUR_API_KEY
-```
+<pre>
+<b>chatgpt --api YOUR_API_KEY</b>
+</pre>
 
 To use ChatGPT Terminal, simply call the **`chatgpt`** command followed by your question. Here's an example:
 
- ```bash
- chatgpt "What is the color of the strawberry?"
- ```
+<pre>
+<b>chatgpt What is the color of the strawberry?</b>
+</pre>
 
 ![Usage GIF](https://github.com/renanleonellocastro/chatgpt-terminal/blob/main/img/strawberry.gif?raw=true)
 
@@ -57,10 +57,10 @@ To use ChatGPT Terminal, simply call the **`chatgpt`** command followed by your 
 
 To uninstall ChatGPT Terminal, navigate to the repository directory and run the uninstallation script:
 
-```bash
-chmod +x install.sh
-./install.sh --uninstall
- ```
+<pre>
+<b>chmod +x install.sh</b>
+<b>./install.sh --uninstall</b>
+</pre>
 
 
 ## 🤝 Contributing
